@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         [FIXABLY] - INTERFACE_TWEAKS
-// @version      1.0
+// @version      1.1
 // @description  Reorganizacja interfejsu na modłe SERVO + kilka zmian quality of life
 // @author       Sebastian Zborowski
 // @match        https://ispot.fixably.com/*
@@ -14,6 +14,8 @@
 //Niniejszy skrypt został utworzony metodą Vibecodingu. Nie ingeruje trwale w oryginalne strony internetowe, nie odwołuje się do danych prywatnych ani chronionych przepisami RODO,
 //nie przetwarza danych osobowych, a także nie zmienia podstawowego działania strony. Skrypt dodaje kilka automatyzacji, skrótów oraz modyfikacje wizualne, które mają na celu
 //usprawnienie i ułatwienie korzystania z serwisu.
+
+//Ostatni update: 30.07.2025
 
 (function () {
     'use strict';
