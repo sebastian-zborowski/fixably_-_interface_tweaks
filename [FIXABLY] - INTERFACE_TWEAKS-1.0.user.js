@@ -344,6 +344,14 @@ function injectServoToggle() {
         }, 200);
     }
 
+   if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', () => {
+            waitForElement('.timeline-panel', minimizeComments);
+        });
+    } else {
+        waitForElement('.timeline-panel', minimizeComments);
+    }
+
     function minimizeComments() {
         const commentPanels = document.querySelectorAll('.timeline-panel');
         commentPanels.forEach(panel => {
