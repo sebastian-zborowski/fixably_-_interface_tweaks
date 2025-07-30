@@ -347,8 +347,8 @@ function injectServoToggle() {
     function minimizeComments() {
         const commentPanels = document.querySelectorAll('.timeline-panel');
         commentPanels.forEach(panel => {
-            panel.style.maxHeight = '';
-            panel.style.overflow = '';
+            //panel.style.maxHeight = '';
+            //panel.style.overflow = '';
             panel.style.fontSize = '12px';
             panel.style.padding = '4px 6px';
         });
