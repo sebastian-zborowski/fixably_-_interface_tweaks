@@ -16,7 +16,7 @@
 //nie przetwarza danych osobowych, a także nie zmienia podstawowego działania strony. Skrypt dodaje kilka automatyzacji, skrótów oraz modyfikacje wizualne, które mają na celu
 //usprawnienie i ułatwienie korzystania z serwisu.
 
-//Ostatni update: 31.07.2025
+//Ostatni update: 31.07.2025 00:58:50
 
 (function () {
     'use strict';
@@ -347,8 +347,8 @@ function injectServoToggle() {
     function minimizeComments() {
         const commentPanels = document.querySelectorAll('.timeline-panel');
         commentPanels.forEach(panel => {
-            panel.style.maxHeight = '100px';
-            panel.style.overflow = 'hidden';
+            panel.style.maxHeight = '';
+            panel.style.overflow = '';
             panel.style.fontSize = '12px';
             panel.style.padding = '4px 6px';
         });
