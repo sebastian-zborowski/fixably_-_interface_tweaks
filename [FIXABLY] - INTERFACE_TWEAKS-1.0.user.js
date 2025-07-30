@@ -5,6 +5,8 @@
 // @author       Sebastian Zborowski
 // @match        https://ispot.fixably.com/*
 // @exclude      https://ispot.fixably.com/pl/orders/*/print/*
+// @updateURL    https://raw.githubusercontent.com/sebastian-zborowski/fixably_-_interface_tweaks/main/%5BFIXABLY%5D%20-%20INTERFACE_TWEAKS-1.0.user.js
+// @downloadURL  https://raw.githubusercontent.com/sebastian-zborowski/fixably_-_interface_tweaks/main/%5BFIXABLY%5D%20-%20INTERFACE_TWEAKS-1.0.user.js
 // @grant        none
 // ==/UserScript==
 
