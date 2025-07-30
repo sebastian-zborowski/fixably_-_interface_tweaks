@@ -344,6 +344,24 @@ function injectServoToggle() {
         }, 200);
     }
 
+    function minimizeComments() {
+        const commentPanels = document.querySelectorAll('.timeline-panel');
+        commentPanels.forEach(panel => {
+            panel.style.maxHeight = '100px';
+            panel.style.overflow = 'hidden';
+            panel.style.fontSize = '12px';
+            panel.style.padding = '4px 6px';
+        });
+    }
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', () => {
+            waitForElement('.timeline-panel', minimizeComments);
+        });
+    } else {
+        waitForElement('.timeline-panel', minimizeComments);
+    }
+
     function addGsxLink() {
         const serialSpan = document.querySelector('span.copy-to-clipboard[data-copy]');
         if (!serialSpan) return;
