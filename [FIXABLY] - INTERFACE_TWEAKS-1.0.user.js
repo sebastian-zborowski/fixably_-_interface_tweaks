@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         [FIXABLY] - INTERFACE_TWEAKS
-// @version      1.1
+// @version      1.2
 // @description  Reorganizacja interfejsu na modłe SERVO + kilka zmian quality of life
 // @author       Sebastian Zborowski - https://github.com/sebastian-zborowski
 // @match        https://ispot.fixably.com/*
@@ -8,6 +8,7 @@
 // @updateURL    https://raw.githubusercontent.com/sebastian-zborowski/fixably_-_interface_tweaks/main/%5BFIXABLY%5D%20-%20INTERFACE_TWEAKS-1.0.user.js
 // @downloadURL  https://raw.githubusercontent.com/sebastian-zborowski/fixably_-_interface_tweaks/main/%5BFIXABLY%5D%20-%20INTERFACE_TWEAKS-1.0.user.js
 // @grant        none
+// @source       https://github.com/sebastian-zborowski
 // ==/UserScript==
 
 //Disclaimer:
