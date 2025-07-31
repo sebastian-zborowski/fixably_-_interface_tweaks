@@ -118,7 +118,7 @@
             const overlay = document.getElementById('loading-overlay');
             if (overlay) {
                 console.warn('Loading overlay trwa dłużej niż 5s - wymuszam przeładowanie strony');
-                location.reload();
+                window.location.href = window.location.href;
             }
         }, timeout);
     }
@@ -280,7 +280,7 @@
 
             toggle.addEventListener('change', function () {
                 safeSetLocalStorage(storageKey, this.checked ? '1' : '0');
-                location.reload();
+                window.location.href = window.location.href;
             });
 
             label.appendChild(toggle);
@@ -636,7 +636,7 @@
         if (document.getElementById('gsx_repair_info')) {
             localStorage.setItem(reloadFlagKey, 'true');
             console.warn(`🛠️ #gsx_repair_info już obecny dla ID ${orderId} — wymuszam reload`);
-            location.reload();
+            window.location.href = window.location.href;
             return;
         }
 
@@ -646,7 +646,7 @@
                 observer.disconnect();
                 localStorage.setItem(reloadFlagKey, 'true');
                 console.warn(`🛠️ Wykryto #gsx_repair_info dla ID ${orderId} — wymuszam reload`);
-                location.reload();
+                window.location.href = window.location.href;
             }
         });
 
