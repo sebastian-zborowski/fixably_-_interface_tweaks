@@ -24,7 +24,7 @@
 
 // Kontrola wersji alert ---------------------------------------------------------
     const SCRIPT_NAME = 'INTERFACE_TWEAKS';
-    const CURRENT_VERSION = '1.0';
+    const CURRENT_VERSION = '1.1';
 // -------------------------------------------------------------------------------
 
     function safeGetLocalStorage(key) {
