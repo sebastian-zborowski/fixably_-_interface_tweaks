@@ -626,13 +626,16 @@
     }
 
     function setupGxsRepairInfoWatcher() {
-        const reloadFlag = 'gsxReloadedOnce';
+        const orderId = getOrderId();
+        if (!orderId) return;
 
-        if (sessionStorage.getItem(reloadFlag) === 'true') return;
+        const reloadFlagKey = `gsxReloaded_${orderId}`;
+
+        if (localStorage.getItem(reloadFlagKey) === 'true') return;
 
         if (document.getElementById('gsx_repair_info')) {
-            sessionStorage.setItem(reloadFlag, 'true');
-            console.warn('🛠️ #gsx_repair_info już obecny — wymuszam reload');
+            localStorage.setItem(reloadFlagKey, 'true');
+            console.warn(`🛠️ #gsx_repair_info już obecny dla ID ${orderId} — wymuszam reload`);
             location.reload();
             return;
         }
@@ -641,8 +644,8 @@
             const found = document.getElementById('gsx_repair_info');
             if (found) {
                 observer.disconnect();
-                sessionStorage.setItem(reloadFlag, 'true');
-                console.warn('🛠️ Wykryto #gsx_repair_info — wymuszam reload');
+                localStorage.setItem(reloadFlagKey, 'true');
+                console.warn(`🛠️ Wykryto #gsx_repair_info dla ID ${orderId} — wymuszam reload`);
                 location.reload();
             }
         });
@@ -653,8 +656,20 @@
         });
 
         window.addEventListener('load', () => {
-            sessionStorage.removeItem(reloadFlag);
+            localStorage.removeItem(reloadFlagKey);
         });
+
+        function getOrderId() {
+            const urlMatch = window.location.pathname.match(/\/orders\/(\d+)/);
+            if (urlMatch) return urlMatch[1];
+
+            const label = document.querySelector('#page-label span');
+            if (label && /^\d+$/.test(label.textContent.trim())) {
+                return label.textContent.trim();
+            }
+
+            return null;
+        }
     }
 
     if (document.readyState === 'loading') {
