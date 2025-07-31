@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         [FIXABLY] - INTERFACE_TWEAKS
-// @version      1.2
+// @version      1.3
 // @description  Reorganizacja interfejsu na modłe SERVO + kilka zmian quality of life
 // @author       Sebastian Zborowski - https://github.com/sebastian-zborowski
 // @match        https://ispot.fixably.com/*
@@ -16,7 +16,7 @@
 //nie przetwarza danych osobowych, a także nie zmienia podstawowego działania strony. Skrypt dodaje kilka automatyzacji, skrótów oraz modyfikacje wizualne, które mają na celu
 //usprawnienie i ułatwienie korzystania z serwisu.
 
-//Ostatni update: 31.07.2025 00:58:50
+//Ostatni update: 31.07.2025
 
 (function () {
     'use strict';
@@ -163,24 +163,24 @@
         }
     }
 
-function injectServoToggle() {
-    const targetRow = [...document.querySelectorAll('.row')].find(
-        row => row.style.height === '22px' && row.style.marginTop === '1px'
-    );
-    if (!targetRow) return;
+    function injectServoToggle() {
+        const targetRow = [...document.querySelectorAll('.row')].find(
+            row => row.style.height === '22px' && row.style.marginTop === '1px'
+        );
+        if (!targetRow) return;
 
-    const leftCol = targetRow.querySelector('.col-xs-6');
-    if (!leftCol) return;
+        const leftCol = targetRow.querySelector('.col-xs-6');
+        if (!leftCol) return;
 
-    // Ustaw flex i wyśrodkowanie pionowe na rodzicu
-    leftCol.style.display = 'flex';
-    leftCol.style.alignItems = 'center';
-    leftCol.style.height = '22px';
+        // Ustaw flex i wyśrodkowanie pionowe na rodzicu
+        leftCol.style.display = 'flex';
+        leftCol.style.alignItems = 'center';
+        leftCol.style.height = '22px';
 
-    if (!document.getElementById('fixably-toggle-style')) {
-        const style = document.createElement('style');
-        style.id = 'fixably-toggle-style';
-        style.textContent = `
+        if (!document.getElementById('fixably-toggle-style')) {
+            const style = document.createElement('style');
+            style.id = 'fixably-toggle-style';
+            style.textContent = `
 #toggle-controls-container {
   display: flex;
   align-items: center;
@@ -247,73 +247,73 @@ function injectServoToggle() {
   transform: translateX(20px);
 }
         `;
-        document.head.appendChild(style);
-    }
-
-    function createToggle(id, labelText, storageKey, tooltipText, defaultOn = false) {
-        const wrapper = document.createElement('div');
-        wrapper.className = 'toggle-wrapper';
-
-        const textLabel = document.createElement('span');
-        textLabel.className = 'toggle-label-text';
-        textLabel.textContent = labelText;
-        textLabel.title = tooltipText;
-
-        const label = document.createElement('label');
-        label.className = 'switch';
-        label.title = tooltipText;
-
-        const toggle = document.createElement('input');
-        toggle.type = 'checkbox';
-        toggle.id = id;
-
-        let storedValue = safeGetLocalStorage(storageKey);
-        if (storedValue === null && defaultOn) {
-            storedValue = '1';
-            safeSetLocalStorage(storageKey, '1');
+            document.head.appendChild(style);
         }
-        toggle.checked = storedValue === '1';
-        toggle.title = tooltipText;
 
-        const slider = document.createElement('span');
-        slider.className = 'slider';
+        function createToggle(id, labelText, storageKey, tooltipText, defaultOn = false) {
+            const wrapper = document.createElement('div');
+            wrapper.className = 'toggle-wrapper';
 
-        toggle.addEventListener('change', function () {
-            safeSetLocalStorage(storageKey, this.checked ? '1' : '0');
-            location.reload();
-        });
+            const textLabel = document.createElement('span');
+            textLabel.className = 'toggle-label-text';
+            textLabel.textContent = labelText;
+            textLabel.title = tooltipText;
 
-        label.appendChild(toggle);
-        label.appendChild(slider);
+            const label = document.createElement('label');
+            label.className = 'switch';
+            label.title = tooltipText;
 
-        wrapper.appendChild(textLabel);
-        wrapper.appendChild(label);
+            const toggle = document.createElement('input');
+            toggle.type = 'checkbox';
+            toggle.id = id;
 
-        return wrapper;
+            let storedValue = safeGetLocalStorage(storageKey);
+            if (storedValue === null && defaultOn) {
+                storedValue = '1';
+                safeSetLocalStorage(storageKey, '1');
+            }
+            toggle.checked = storedValue === '1';
+            toggle.title = tooltipText;
+
+            const slider = document.createElement('span');
+            slider.className = 'slider';
+
+            toggle.addEventListener('change', function () {
+                safeSetLocalStorage(storageKey, this.checked ? '1' : '0');
+                location.reload();
+            });
+
+            label.appendChild(toggle);
+            label.appendChild(slider);
+
+            wrapper.appendChild(textLabel);
+            wrapper.appendChild(label);
+
+            return wrapper;
+        }
+
+        const oldContainer = document.getElementById('toggle-controls-container');
+        if (oldContainer) oldContainer.remove();
+
+        const container = document.createElement('div');
+        container.id = 'toggle-controls-container';
+
+        const servoTooltip = 'Reorganizuje interfejs Fixably tak aby bardziej przypominał ten z SERVO.';
+        const servoToggle = createToggle('servo-toggle', 'SERVO-MOD', 'SERVOMODE', servoTooltip);
+        container.appendChild(servoToggle);
+
+        if (servoToggle.querySelector('input').checked) {
+            const flipTooltip = 'Zamienia miejscami komentarze i części, w zależności od preferencji Serwisanta.';
+            const flipToggle = createToggle('flip-toggle', 'COMM-PART', 'FLIPPARTS', flipTooltip);
+            container.appendChild(flipToggle);
+            //Ta funkcjonalnośc nie jest jeszcze gotowa
+            //const preloaderTooltip = 'Włącza lub wyłącza nakładkę ładowania (preloader) na stronach zamówień i napraw.';
+            //onst preloaderToggle = createToggle('preloader-toggle', 'PRELOADER', 'PRELOADER', preloaderTooltip, true);
+            //container.appendChild(preloaderToggle);
+        }
+
+        leftCol.appendChild(container);
     }
-
-    const oldContainer = document.getElementById('toggle-controls-container');
-    if (oldContainer) oldContainer.remove();
-
-    const container = document.createElement('div');
-    container.id = 'toggle-controls-container';
-
-    const servoTooltip = 'Reorganizuje interfejs Fixably tak aby bardziej przypominał ten z SERVO.';
-    const servoToggle = createToggle('servo-toggle', 'SERVO-MOD', 'SERVOMODE', servoTooltip);
-    container.appendChild(servoToggle);
-
-    if (servoToggle.querySelector('input').checked) {
-        const flipTooltip = 'Zamienia miejscami komentarze i części, w zależności od preferencji Serwisanta.';
-        const flipToggle = createToggle('flip-toggle', 'COMM-PART', 'FLIPPARTS', flipTooltip);
-        container.appendChild(flipToggle);
-        //Ta funkcjonalnośc nie jest jeszcze gotowa
-        //const preloaderTooltip = 'Włącza lub wyłącza nakładkę ładowania (preloader) na stronach zamówień i napraw.';
-        //onst preloaderToggle = createToggle('preloader-toggle', 'PRELOADER', 'PRELOADER', preloaderTooltip, true);
-        //container.appendChild(preloaderToggle);
-    }
-
-    leftCol.appendChild(container);
-}
 
     function waitForOrderDeviceContainer(callback, timeout = 10000) {
         const startTime = Date.now();
@@ -373,15 +373,15 @@ function injectServoToggle() {
         const dd = dt?.nextElementSibling;
         if (!dd || dd.tagName.toLowerCase() !== 'dd') return;
 
-        const gspn = document.createElement('a');
-        gspn.href = `https://gsx2.apple.com/product-details/${serial}`;
-        gspn.target = '_blank';
-        gspn.textContent = '[GSPN]';
-        gspn.id = 'gsx-link';
-        gspn.style.marginLeft = '8px';
-        gspn.style.fontSize = '11px';
+        const gsx = document.createElement('a');
+        gsx.href = `https://gsx2.apple.com/product-details/${serial}`;
+        gsx.target = '_blank';
+        gsx.textContent = '[GSX]';
+        gsx.id = 'gsx-link';
+        gsx.style.marginLeft = '8px';
+        gsx.style.fontSize = '11px';
 
-        dd.appendChild(gspn);
+        dd.appendChild(gsx);
 
         const ast = document.createElement('a');
         ast.href = `https://diagnostics.apple.com/?serial=${serial}`;
@@ -594,19 +594,82 @@ function injectServoToggle() {
                 window.dispatchEvent(new Event('urlchange'));
             }
         }, 500);
+
+        setupDomMutationObserver();
     }
 
+    function setupDomMutationObserver() {
+        const target = document.getElementById('main-content') || document.querySelector('.container');
+        if (!target) return;
+
+        const observer = new MutationObserver(mutations => {
+            for (const mutation of mutations) {
+                if (
+                    mutation.type === 'childList' &&
+                    mutation.removedNodes.length > 0 &&
+                    target.children.length === 0
+                ) {
+                    console.warn('DOM content cleared, re-initializing...');
+                    setTimeout(() => {
+                        injectServoToggle();
+                        initPage();
+                    }, 100);
+                    break;
+                }
+            }
+        });
+
+        observer.observe(target, {
+            childList: true,
+            subtree: false
+        });
+    }
+
+    function setupGxsRepairInfoWatcher() {
+        const reloadFlag = 'gsxReloadedOnce';
+
+        if (sessionStorage.getItem(reloadFlag) === 'true') return;
+
+        if (document.getElementById('gsx_repair_info')) {
+            sessionStorage.setItem(reloadFlag, 'true');
+            console.warn('🛠️ #gsx_repair_info już obecny — wymuszam reload');
+            location.reload();
+            return;
+        }
+
+        const observer = new MutationObserver(() => {
+            const found = document.getElementById('gsx_repair_info');
+            if (found) {
+                observer.disconnect();
+                sessionStorage.setItem(reloadFlag, 'true');
+                console.warn('🛠️ Wykryto #gsx_repair_info — wymuszam reload');
+                location.reload();
+            }
+        });
+
+        observer.observe(document.body, {
+            childList: true,
+            subtree: true,
+        });
+
+        window.addEventListener('load', () => {
+            sessionStorage.removeItem(reloadFlag);
+        });
+    }
 
     if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', () => {
             injectServoToggle();
             setupUrlHooks();
+            setupGxsRepairInfoWatcher();
             initPage();
         });
     } else {
         injectServoToggle();
         setupUrlHooks();
+        setupGxsRepairInfoWatcher();
         initPage();
     }
+
 
 })();
