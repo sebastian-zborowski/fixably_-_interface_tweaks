@@ -21,12 +21,6 @@
 (function () {
     'use strict';
 
-
-// Kontrola wersji alert ---------------------------------------------------------
-    const SCRIPT_NAME = 'INTERFACE_TWEAKS';
-    const CURRENT_VERSION = '1.0';
-// -------------------------------------------------------------------------------
-
     function safeGetLocalStorage(key) {
         try {
             return localStorage.getItem(key);
@@ -700,12 +694,7 @@
     ];
 
     const currentVersions = {
-        VERSION_CONTROL_SYSTEM: '1.0',
-        PASTE_LINK: '1.0',
         INTERFACE_TWEAKS: '1.0',
-        PHOTO_PREVIEW: '0.8',
-        'ACTION-REQUIRED': '1.0',
-        ADD_PARTS: '1.0',
     };
 
     await Promise.all(scriptList.map(async script => {
