@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         [FIXABLY] - INTERFACE_TWEAKS
-// @version      1.1
+// @version      1.0
 // @description  Reorganizacja interfejsu na modłe SERVO + kilka zmian quality of life
 // @author       Sebastian Zborowski - https://github.com/sebastian-zborowski
 // @match        https://ispot.fixably.com/*
