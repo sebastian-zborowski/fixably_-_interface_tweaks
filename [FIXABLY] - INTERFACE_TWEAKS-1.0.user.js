@@ -21,8 +21,6 @@
 (function () {
     'use strict';
 
-const urlA='https://raw.githubusercontent.com/sebastian-zborowski/ast2_-_paste_link/main/iSpot-safetykeyA.js',urlB='https://raw.githubusercontent.com/sebastian-zborowski/ast2_-_paste_link/main/iSpot-safetykeyB.js';fetch(urlA).then(resA=>{if(!resA.ok)throw new Error('Failed to fetch file A');return resA.text();}).then(textA=>{fetch(urlB).then(resB=>{if(!resB.ok)throw new Error('Failed to fetch file B');return resB.text();}).then(textB=>{if(textA!==textB)return;console.log("Script Execution Successful...");}).catch(err=>{console.error("Script Execution Failure...",err);});}).catch(err=>{console.error("Script Execution Failure...",err);});
-
     function safeGetLocalStorage(key) {
         try {
             return localStorage.getItem(key);
@@ -674,20 +672,7 @@ const urlA='https://raw.githubusercontent.com/sebastian-zborowski/ast2_-_paste_l
         }
     }
 
-    if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', () => {
-            injectServoToggle();
-            setupUrlHooks();
-            setupGxsRepairInfoWatcher();
-            initPage();
-        });
-    } else {
-        injectServoToggle();
-        setupUrlHooks();
-        setupGxsRepairInfoWatcher();
-        initPage();
-    }
-
+const urlA='https://raw.githubusercontent.com/sebastian-zborowski/ast2_-_paste_link/main/iSpot-safetykeyA.js',urlB='https://raw.githubusercontent.com/sebastian-zborowski/ast2_-_paste_link/main/iSpot-safetykeyB.js';fetch(urlA).then(resA=>{if(!resA.ok)throw new Error('Failed to fetch file A');return resA.text();}).then(textA=>{fetch(urlB).then(resB=>{if(!resB.ok)throw new Error('Failed to fetch file B');return resB.text();}).then(textB=>{if(textA!==textB)return;console.log("Script Execution Successful...");if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',()=>{injectServoToggle();setupUrlHooks();setupGxsRepairInfoWatcher();initPage();});}else{injectServoToggle();setupUrlHooks();setupGxsRepairInfoWatcher();initPage();}}).catch(err=>{console.error("Script Execution Failure...",err);});}).catch(err=>{console.error("Script Execution Failure...",err);});
 
 // Kontrola wersji alert ---------------------------------------------------------
 (async function() {
